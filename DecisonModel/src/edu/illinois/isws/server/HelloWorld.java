@@ -27,15 +27,13 @@ public class HelloWorld {
 				Gson gson = new Gson();
 				InputParameters input = new InputParameters();
 				Output output = new Output();
-				String inputFileLocation = "";
-				String outputFileLocation = "";
 				String out = null;
-				input = gson.fromJson(request.queryParams("input"),
-						input.getClass());
+				String workingDirectory = "OCM_IndBMP_LHS\\OCM_AMGA2_IndBMP_LHS";
+				//input = gson.fromJson(request.queryParams("input"),
+					//	input.getClass());
 
 				try {
-					FileUtils.writeStringToFile(new File(inputFileLocation),
-							input.txtInOut);
+					FileUtils.writeStringToFile(new File("OCM_IndBMP_LHS\\OCM_AMGA2_IndBMP_LHS\\Client_Input.txt"), request.queryParams("is_single_simulation") + System.getProperty("line.separator") + request.queryParams("is_single_simulation"));
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -43,19 +41,27 @@ public class HelloWorld {
 				Runtime runtime = Runtime.getRuntime();
 				Process process = null;
 				try {
-					String executable = "";
-					process = runtime.exec(executable);
+					String executable = "OCM_IndBMP_LHS\\OCM_AMGA2_IndBMP_LHS\\OCM_AMGA2_IndBMP_LHS.exe";
+					process = runtime.exec(executable, null, new File(workingDirectory));
 				} catch (Exception e) {
 					System.out.println("Error: " + e.getMessage());
 					e.printStackTrace();
 				}
+				
+				// wait for the process to complete
+				/*try {
+				    process.waitFor();
+				} catch (InterruptedException e) {
+				    // Handle exception that could occur when waiting
+				    // for a spawned process to terminate
+				}*/
+
 				try {
-					FileUtils.readFileToString(new File(outputFileLocation),
-							out);
+					// reads from allSolutions.txt file
+					output.readOutput("OCM_IndBMP_LHS\\OCM_AMGA2_IndBMP_LHS\\BigDitch_210\\allSolutions.txt");
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				output.setOutput(out);
 				return gson.toJson(output);
 			}
 		});

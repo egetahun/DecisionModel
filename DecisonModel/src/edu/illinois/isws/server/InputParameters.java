@@ -1,8 +1,6 @@
 package edu.illinois.isws.server;
 
 public class InputParameters {
-	public String txtInOut;
-	public InputParameters() {
-		this.txtInOut = "";
-	}
+	public String isSingleSimulation = "2";
+	public String wishIndex = "2";
 }
