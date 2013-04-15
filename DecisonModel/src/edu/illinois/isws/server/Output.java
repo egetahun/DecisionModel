@@ -15,4 +15,13 @@ public class Output {
 		ppr = s.nextInt();
 		totCost = s.nextDouble();
 	}
+	
+	public String toString(String fileLocation) throws FileNotFoundException {
+		readOutput(fileLocation);
+		return String.valueOf(sedLd) + "," 
+				+ String.valueOf(nitLd) + ","
+				+ String.valueOf(phoLd) + ","
+				+ String.valueOf(ppr) + ","
+				+ String.valueOf(totCost) + "\n";
+	}
 }
